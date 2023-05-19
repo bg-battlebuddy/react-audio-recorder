@@ -35,8 +35,6 @@
     }
   },
   "scripts": {
-    "prepare": "npm install && npm run build",
-    "postinstall": "npm install && npm run build",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
