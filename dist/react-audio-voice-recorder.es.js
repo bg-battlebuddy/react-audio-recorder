@@ -1,5 +1,5 @@
 (function(){"use strict";(r=>{try{if(typeof window>"u")return;var e=document.createElement("style");e.appendChild(document.createTextNode(r)),document.head.appendChild(e)}catch(o){console.error("vite-plugin-css-injected-by-js",o)}})(".audio-recorder{background-color:#ebebeb;box-shadow:0 2px 5px #bebebe;border-radius:20px;box-sizing:border-box;color:#000;width:40px;display:flex;align-items:center;transition:all .2s ease-in;-webkit-tap-highlight-color:transparent}.audio-recorder-mic{box-sizing:content-box;cursor:pointer;height:16px;color:#000;padding:12px}.audio-recorder .audio-recorder-mic{border-radius:20px}.audio-recorder.recording .audio-recorder-mic{border-radius:0}.audio-recorder-timer,.audio-recorder-status{color:#000;margin-left:10px;font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;font-size:14px;font-weight:400;line-height:1}.audio-recorder-status{margin-left:15px;display:flex;align-items:baseline;flex-grow:1;animation-name:fading-ar-status;animation-duration:2s;animation-iteration-count:infinite}.audio-recorder-status-dot{background-color:#d00;border-radius:50%;height:10px;width:9px;margin-right:5px}.audio-recorder-options{box-sizing:content-box;height:16px;cursor:pointer;padding:12px 6px 12px 12px}.audio-recorder-options~.audio-recorder-options{padding:12px 12px 12px 6px;border-radius:0 5px 5px 0}.recording{border-radius:12px;width:300px;transition:all .2s ease-out}.display-none{display:none}@keyframes fading-ar-status{0%{opacity:1}50%{opacity:0}to{opacity:1}}")})();
-import N, { useState as d, useCallback as x, useEffect as b } from "react";
+import N, { useState as d, useCallback as v, useEffect as b } from "react";
 const Y = () => {
   const [j, o] = d(!1), [I, a] = d(!1), [M, w] = d(0), [i, s] = d(), [g, e] = d(), [D, u] = d(), C = () => {
     const c = setInterval(() => {
@@ -10,19 +10,18 @@ const Y = () => {
     g != null && clearInterval(g), e(void 0);
   };
   return {
-    startRecording: x(() => {
-      g == null && navigator.mediaDevices.getUserMedia({
-        audio: {
-          echoCancellation: !1,
-          noiseSuppression: !1,
-          autoGainControl: !1,
-          googEchoCancellation: "false",
-          googAutoGainControl: "false",
-          googNoiseSuppression: "false",
-          googHighpassFilter: "false"
-        },
-        video: !1
-      }).then((c) => {
+    startRecording: v(() => {
+      g == null && navigator.mediaDevices.getUserMedia({ audio: {
+        optional: [
+          { echoCancellation: !1 },
+          { noiseSuppression: !1 },
+          { autoGainControl: !1 },
+          { googEchoCancellation: !1 },
+          { googAutoGainControl: !1 },
+          { googNoiseSuppression: !1 },
+          { googHighpassFilter: !1 }
+        ]
+      } }).then((c) => {
         o(!0);
         const t = new MediaRecorder(c);
         s(t), t.start(), C(), t.addEventListener("dataavailable", (r) => {
@@ -64,8 +63,8 @@ const W = ({
   }, y = (m) => {
     const A = new Blob([m], {
       type: `audio/${a}`
-    }), v = URL.createObjectURL(A), L = document.createElement("a");
-    L.style.display = "none", L.href = v, L.download = `audio.${a}`, document.body.appendChild(L), L.click(), L.remove();
+    }), x = URL.createObjectURL(A), L = document.createElement("a");
+    L.style.display = "none", L.href = x, L.download = `audio.${a}`, document.body.appendChild(L), L.click(), L.remove();
   };
   return b(() => {
     (C || o) && g != null && j != null && j(g), I && g != null && y(g);
