@@ -50,7 +50,11 @@ const useAudioRecorder: () => recorderControls = () => {
     if (timerInterval != null) return;
 
     navigator.mediaDevices
-      .getUserMedia({ audio: true })
+      .getUserMedia({ audio: {
+          echoCancellation: false,
+          noiseSuppression: false,
+        }
+      })
       .then((stream) => {
         setIsRecording(true);
         const recorder: MediaRecorder = new MediaRecorder(stream);
